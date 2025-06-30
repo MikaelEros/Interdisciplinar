@@ -1,0 +1,137 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#09B395">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Bienvenida -->
+
+        <!-- Login -->
+
+        <LinearLayout
+            android:id="@+id/vistaBienvenida"
+            android:layout_width="match_parent"
+            android:layout_height="900dp"
+            android:background="@color/black"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="#0000FF"
+                android:text="Recovery Gallery"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnContinuar"
+                android:layout_width="256dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@color/white"
+                android:rotationY="0"
+                android:text="CONTINUAR"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/vistaLogin"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="700dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Iniciar Sesión"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/usuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Usuario o Email" />
+
+            <EditText
+                android:id="@+id/pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PIN"
+                android:inputType="numberPassword" />
+
+            <Button
+                android:id="@+id/btnIniciar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Entrar" />
+
+            <TextView
+                android:id="@+id/irRegistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿No tienes cuenta? Regístrate" />
+        </LinearLayout>
+
+        <!-- Registro -->
+        <LinearLayout
+            android:id="@+id/vistaRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Crear Cuenta"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/nuevoUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Usuario o Email" />
+
+            <EditText
+                android:id="@+id/nuevoPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PIN"
+                android:inputType="numberPassword" />
+
+            <EditText
+                android:id="@+id/confirmarPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirmar PIN"
+                android:inputType="numberPassword" />
+
+            <Button
+                android:id="@+id/btnRegistrar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registrar" />
+
+            <TextView
+                android:id="@+id/irLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿Ya tienes cuenta? Inicia sesión" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
