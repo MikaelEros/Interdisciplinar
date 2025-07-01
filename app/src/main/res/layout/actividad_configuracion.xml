@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:text="Configuración"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!-- Opción de método de autenticación -->
+        <TextView
+            android:text="Método de Autenticación"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupAuth"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/radioHuella"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Huella Digital" />
+
+            <RadioButton
+                android:id="@+id/radioPin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contraseña numérica" />
+        </RadioGroup>
+
+        <!-- Botones para actualizar -->
+
+        <Button
+            android:id="@+id/btnCambiarContrasena"
+            android:text="Actualizar Contraseña"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Opciones de seguridad -->
+        <TextView
+            android:text="Seguridad"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <CheckBox
+            android:id="@+id/checkCifrado"
+            android:text="Activar cifrado de imágenes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/checkPinExtra"
+            android:text="PIN secundario para galería"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Gestión de cuenta -->
+        <TextView
+            android:text="Cuenta"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnCambiarCorreo"
+            android:text="Cambiar correo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnEliminarCuenta"
+            android:text="Eliminar cuenta"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#E53935"
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnCerrarSesion"
+            android:text="Cerrar sesión"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>
