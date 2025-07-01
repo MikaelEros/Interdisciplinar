@@ -11,25 +11,32 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.FirebaseApp
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
+import java.util.concurrent.Executor
+import android.content.Context
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var bienvenida: LinearLayout
     lateinit var login: LinearLayout
     lateinit var registro: LinearLayout
+    lateinit var biometricPrompt: BiometricPrompt
+    lateinit var promptInfo: BiometricPrompt.PromptInfo
+    lateinit var executor: Executor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
         setContentView(R.layout.activity_main)
 
-        val prefs = getSharedPreferences("usuarios", MODE_PRIVATE)
+        val prefs = getSharedPreferences("usuarios", Context.MODE_PRIVATE)
 
         bienvenida = findViewById(R.id.vistaBienvenida)
         login = findViewById(R.id.vistaLogin)
         registro = findViewById(R.id.vistaRegistro)
 
-        // Cambiar de vista
+        // Vista
         findViewById<Button>(R.id.btnContinuar).setOnClickListener {
             mostrarVista(login)
         }
@@ -63,19 +70,39 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Inicia sesion-------------------------- ------ -------
-        findViewById<Button>(R.id.btnIniciar).setOnClickListener {
-            val user = findViewById<EditText>(R.id.usuario).text.toString()
-            val pass = findViewById<EditText>(R.id.pin).text.toString()
+        // Configurar autenticación biométrica
+        executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                Toast.makeText(applicationContext, "Huella verificada", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(applicationContext, GaleriaActivity::class.java))
+            }
 
-            val savedUser = prefs.getString("usuario", "")
-            val savedPin = prefs.getString("pin", "")
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+                Toast.makeText(applicationContext, "Error: $errString", Toast.LENGTH_SHORT).show()
+            }
 
-            if (user == savedUser && pass == savedPin) {
-                Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, GaleriaActivity::class.java))
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+                Toast.makeText(applicationContext, "Autenticación fallida", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Verificación biométrica")
+            .setSubtitle("Usa tu huella digital para acceder")
+            .setNegativeButtonText("Cancelar")
+            .build()
+
+        // Iniciar sesión con huella
+        findViewById<Button>(R.id.btnHuella).setOnClickListener {
+            val biometricManager = BiometricManager.from(this)
+            if (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS) {
+                biometricPrompt.authenticate(promptInfo)
             } else {
-                Toast.makeText(this, "Usuario o PIN incorrecto", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Biometría no disponible en este dispositivo", Toast.LENGTH_LONG).show()
             }
         }
     }

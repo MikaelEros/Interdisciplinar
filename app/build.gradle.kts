@@ -48,4 +48,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.firebase.storage)
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation ("androidx.biometric:biometric:1.2.0-alpha04")
 }

@@ -8,6 +8,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.OpenableColumns
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,8 +19,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.FirebaseApp
-import com.google.firebase.storage.FirebaseStorage
-import java.util.UUID
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.util.*
 
 class GaleriaActivity : AppCompatActivity() {
 
@@ -36,7 +43,7 @@ class GaleriaActivity : AppCompatActivity() {
             if (imageUri != null) {
                 imagenesSeleccionadas.add(imageUri)
                 adapter.notifyItemInserted(imagenesSeleccionadas.size - 1)
-                subirImagenAFirebase(imageUri)
+                subirImagenACloudinary(imageUri)
             }
         }
     }
@@ -61,7 +68,7 @@ class GaleriaActivity : AppCompatActivity() {
             }
         }
     }
-//Permiso para poder accer a la galeria
+
     private fun tienePermisos(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED
@@ -92,6 +99,59 @@ class GaleriaActivity : AppCompatActivity() {
         pickImageLauncher.launch(intent)
     }
 
+    private fun subirImagenACloudinary(uri: Uri) {
+        val cloudName = "dajlef4gu"
+        val uploadPreset = "galery"
+
+        val contentResolver = this.contentResolver
+
+        // Obtener nombre del archivo
+        var fileName = "imagen.jpg"
+        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+            val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            if (cursor.moveToFirst()) {
+                fileName = cursor.getString(nameIndex)
+            }
+        }
+
+        // Crear archivo temporal desde el URI
+        val inputStream = contentResolver.openInputStream(uri)
+        val tempFile = File.createTempFile("temp_upload", fileName, this.cacheDir)
+        val outputStream = FileOutputStream(tempFile)
+        inputStream?.copyTo(outputStream)
+        inputStream?.close()
+        outputStream.close()
+
+        // Crear cuerpo del request
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("file", fileName, tempFile.asRequestBody("image/*".toMediaTypeOrNull()))
+            .addFormDataPart("upload_preset", uploadPreset)
+            .build()
+
+        val request = Request.Builder()
+            .url("https://api.cloudinary.com/v1_1/$cloudName/image/upload")
+            .post(requestBody)
+            .build()
+
+        val client = OkHttpClient()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("CLOUDINARY", "Error al subir imagen", e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body?.string()
+                    Log.d("CLOUDINARY", "Subida exitosa: $responseBody")
+                } else {
+                    Log.e("CLOUDINARY", "Error en respuesta: ${response.code}")
+                }
+            }
+        })
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -105,18 +165,4 @@ class GaleriaActivity : AppCompatActivity() {
             Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun subirImagenAFirebase(uri: Uri) {
-        val storage = FirebaseStorage.getInstance()
-        val nombreArchivo = "imagenes/${UUID.randomUUID()}.jpg"
-        val referencia = storage.reference.child(nombreArchivo)
-
-        referencia.putFile(uri)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Imagen subida a Firebase Storage", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Error al subir: ${it.message}", Toast.LENGTH_LONG).show()
-            }
-    }
-
 }
