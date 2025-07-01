@@ -16,6 +16,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.FirebaseApp
+import com.google.firebase.storage.FirebaseStorage
+import java.util.UUID
 
 class GaleriaActivity : AppCompatActivity() {
 
@@ -33,12 +36,14 @@ class GaleriaActivity : AppCompatActivity() {
             if (imageUri != null) {
                 imagenesSeleccionadas.add(imageUri)
                 adapter.notifyItemInserted(imagenesSeleccionadas.size - 1)
+                subirImagenAFirebase(imageUri)
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
         setContentView(R.layout.activity_galeria)
 
         recyclerView = findViewById(R.id.recyclerView)
@@ -100,4 +105,18 @@ class GaleriaActivity : AppCompatActivity() {
             Toast.makeText(this, "Permiso denegado", Toast.LENGTH_SHORT).show()
         }
     }
+    private fun subirImagenAFirebase(uri: Uri) {
+        val storage = FirebaseStorage.getInstance()
+        val nombreArchivo = "imagenes/${UUID.randomUUID()}.jpg"
+        val referencia = storage.reference.child(nombreArchivo)
+
+        referencia.putFile(uri)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Imagen subida a Firebase Storage", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error al subir: ${it.message}", Toast.LENGTH_LONG).show()
+            }
+    }
+
 }

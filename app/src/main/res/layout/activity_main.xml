@@ -18,7 +18,7 @@
             android:id="@+id/vistaBienvenida"
             android:layout_width="match_parent"
             android:layout_height="900dp"
-            android:background="@color/black"
+            android:background="@color/white"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="32dp">
