@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Toast.makeText(this, "Hola desde la rama de prueba 🎉", Toast.LENGTH_LONG).show()
 
         val prefs = getSharedPreferences("usuarios", Context.MODE_PRIVATE)
 
