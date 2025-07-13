@@ -29,19 +29,21 @@
                 android:layout_marginBottom="0dp"
                 android:text="Recovery "
                 android:textColor="@android:color/white"
-                android:textSize="50sp"
-                android:textStyle="bold" />
+                android:textSize="60sp"
+                android:textStyle="bold"
+                android:gravity="center" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="10dp"
                 android:text=" Gallery"
                 android:textAlignment="center"
                 android:textColor="#A020F0"
                 android:textSize="80sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:gravity="center" />
 
             <Button
                 android:id="@+id/btnContinuar"
@@ -63,7 +65,7 @@
             android:background="@android:color/white"
             android:orientation="vertical"
             android:padding="24dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,15 +80,30 @@
                 android:id="@+id/usuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Usuario o Email"
+                android:hint="Email"
                 android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contraseña"
+                android:inputType="textPassword" />
+
+            <!-- Botón para iniciar sesión normal -->
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Iniciar Sesión" />
 
             <!-- Botón para iniciar con huella -->
             <Button
                 android:id="@+id/btnHuella"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:text="Iniciar con huella digital" />
 
             <TextView
@@ -96,6 +113,34 @@
                 android:layout_marginTop="8dp"
                 android:text="¿No tienes cuenta? Regístrate"
                 android:textColor="#A020F0" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Opciones de inicio de sesión:"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="#666666" />
+
+            <Button
+                android:id="@+id/btnBackupLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Backup de clave de recuperación"
+                android:backgroundTint="#A020F0"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="(Requiere iniciar sesión primero)"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="#999999" />
 
             <Space
                 android:layout_width="match_parent"
@@ -127,21 +172,57 @@
                 android:id="@+id/nuevoUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nuevo usuario o Email"
+                android:hint="Email"
                 android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/nuevoPin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="PIN"
-                android:inputType="numberPassword" />
+                android:hint="Contraseña (mínimo 6 caracteres)"
+                android:inputType="textPassword" />
+            
             <EditText
                 android:id="@+id/confirmarPin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirmar PIN"
-                android:inputType="numberPassword" />
+                android:hint="Confirmar contraseña"
+                android:inputType="textPassword" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="La contraseña debe contener letras y números"
+                android:textSize="12sp"
+                android:textColor="#666666"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Pregunta de seguridad"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:id="@+id/editPreguntaRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ej: ¿Nombre de tu primera mascota?"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Respuesta de seguridad"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:id="@+id/editRespuestaRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Respuesta secreta"/>
 
             <!-- Check para activar inicio con huella -->
             <CheckBox

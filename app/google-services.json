@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "412846553778",
-    "project_id": "appgalery-90d3a",
-    "storage_bucket": "appgalery-90d3a.firebasestorage.app"
+    "project_number": "911393452281",
+    "project_id": "base-de-datos-appp",
+    "storage_bucket": "base-de-datos-appp.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:412846553778:android:afba72469349ee669867ab",
+        "mobilesdk_app_id": "1:911393452281:android:42d3592f2a74ea6c75b228",
         "android_client_info": {
           "package_name": "com.example.myapplication"
         }
@@ -15,7 +15,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCzNdXzR2YYzVgkdN8zgQficNrOyPt1HVM"
+          "current_key": "AIzaSyArFxvUyysgnx4shpzUh90GIPPS5FIlpeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911393452281:android:12eea8226480008b75b228",
+        "android_client_info": {
+          "package_name": "com.firebaseauth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArFxvUyysgnx4shpzUh90GIPPS5FIlpeA"
         }
       ],
       "services": {
